@@ -3,12 +3,20 @@ var showCards = document.getElementById("cards");
 
 //onclick of button run function and hide after click
 showCards.onclick = function(){
+
   var cardContainer = document.getElementById('container');
   cardContainer.innerHTML = "";
   cardContainer.style.display = "";
   showCards.style.display = "none";
-  hideClick.style.display = "";
   displayCards();
+
+    if (document.getElementById('newReset') === null) {
+    resetBtn();
+  } else {
+    var reShowCards = document.getElementById('new');
+    reShowCards.style.display = "";
+  }
+
 };
 
 //
@@ -82,44 +90,54 @@ function shuffleCards(deck){
 }
 
 
-//button reset function
-var hideClick = document.getElementById("reset");
-var hideReset = function(){
-  hideClick.style.display = "none";
-};
-hideReset();
+function resetBtn(){
+  var resetButton = document.createElement('button');
+  var text = document.createTextNode("Reset!");
+  var deal = document.getElementById('cards');
 
-hideClick.onclick = function(){
-  var cardContainer = document.getElementById('container');
-  cardContainer.style.display = "none";
-  hideClick.style.display = "none";
+  resetButton.id = "newReset";
+  resetButton.appendChild(text);
+  deal.parentNode.insertBefore(resetButton, deal);
+//creates variable to get new reDeal button
+  var resetCards = document.getElementById('newReset');
+//function that shows shuffled cards when redeal button is clicked
+  resetCards.onclick = function(){
+    var cardContainer = document.getElementById('container');
+    cardContainer.innerHTML = "";
+    cardContainer.style.display = "";
+    resetCards.style.display = "none";
 
-  if (document.getElementById('new') === null) {
-    reDeal();
-  } else {
-    var reShowCards = document.getElementById('new');
-    reShowCards.style.display = "";
-  }
-};
+    if (document.getElementById('new') === null) {
+      reDeal();
+    } else {
+      var reShowCards = document.getElementById('new');
+      reShowCards.style.display = "";
+    }
+  };
+}
+
+
 
 //creates reDeal button and appends to dom
 function reDeal(){
   var reDealButton = document.createElement('button');
   var text = document.createTextNode("Re-deal?");
-  var deal = document.getElementById('cards');
+  var cardContainer = document.getElementById('container');
 
   reDealButton.id = "new";
   reDealButton.appendChild(text);
-  deal.parentNode.appendChild(reDealButton);
+  cardContainer.parentNode.appendChild(reDealButton);
 //creates variable to get new reDeal button
   var reShowCards =document.getElementById('new');
+  var resetBtn = document.getElementById('newReset')
 //function that shows shuffled cards when redeal button is clicked
   reShowCards.onclick = function(){
     var cardContainer = document.getElementById('container');
     cardContainer.innerHTML = "";
     cardContainer.style.display = "";
-    hideClick.style.display = "";
+    resetBtn.style.display = "";
     reShowCards.style.display = "none";
+
     displayCards();
   };
 }
