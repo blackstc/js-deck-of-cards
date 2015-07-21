@@ -1,35 +1,34 @@
-//grabbing with the ID "cards"
+//making a variable that grabs the id "cards"
 var showCards = document.getElementById("cards");
 
-//onclick of button run function.
+//onclick of button run function
 showCards.onclick = function(){
   var cardContainer = document.getElementById('container');
   cardContainer.innerHTML = "";
+  cardContainer.style.display = "";
+  showCards.style.display = "none";
+  hideClick.style.display = "";
   displayCards();
 };
 
-
+//
 function displayCards(){
-  //creates new variable deck, that calls newDeck function
+  //creating a new variable that calls newDeck function
   var deck = newDeck();
-  //sets new variable to the call of shuffledCards function
+  //creates a new variable the calls the shuffleCards function with the argument of deck
   var shuffledCards = shuffleCards(deck);
-
-
+  //
   for(var i=0; i < deck.length; i++){
-    //creates a variable that creats a div element in the HTML
+    //creates a variable that creates a div element in the html
     var card = document.createElement('div');
-    //sets the class of the new div to "card"
+    //sets class of new div to "card"
     card.className = "card";
-    //grabbing the section with the id name "container"
+    //grabs the section with id container
     var cardContainer = document.getElementById('container');
-    //appends the new div to the section with the id container
+    //appends new dive to the section with the div container
     cardContainer.appendChild(card);
-    //sets the background image of the new div to a specified url.
+    //sets the backgorund image of the new div to a specialized url
     card.style.backgroundImage = "url(images/" + shuffledCards[i].suit + "-" + shuffledCards[i].card + ".png" + ")";
-
-    var reset = document.createElement('button');
-    cardContainer.appendChild(reset);
 
   }
 }
@@ -56,15 +55,13 @@ function newDeck(){
   var suits = [ "d", "c", "s", "h"];
   var deck = [];
 
-
-
   //creates 52 card deck with suits
   for (var i = 0; i < ranks.length; i++) {
     for (var j = 0; j < suits.length; j++) {
       deck.push({
         card: ranks[i].card,
         suit: suits[j]
-        });
+      });
     }
   }
   return deck;
@@ -72,14 +69,29 @@ function newDeck(){
 
 // Shuffles the Deck
 function shuffleCards(deck){
-    var output = [];
-    var workingArray = deck.slice(0);
-    var current = workingArray.length;
+  var output = [];
+  var workingArray = deck.slice(0);
+  var current = workingArray.length;
 
-    while (current) {
-      var random = Math.floor(Math.random() * current);
-      output.push(workingArray.splice(random, 1)[0]);
-      current--;
+  while (current) {
+    var random = Math.floor(Math.random() * current);
+    output.push(workingArray.splice(random, 1)[0]);
+    current --;
     }
     return output;
+}
+
+
+//button reset function
+var hideClick = document.getElementById("reset");
+var hideReset = function(){
+  hideClick.style.display = "none";
+};
+hideReset();
+
+hideClick.onclick = function(){
+  var cardContainer = document.getElementById('container');
+  cardContainer.style.display = "none";
+  showCards.style.display = "";
+  hideClick.style.display = "none";
 }
